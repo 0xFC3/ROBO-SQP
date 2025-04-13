@@ -1,0 +1,29 @@
+robot:
+  type: "staticarm"
+  n_dof: 6
+  link_length: 0.15
+  sphere_width: 0.05
+  safety_margin: 0.01
+
+world:
+  num_vox: 64
+  limits: [-1.0, 1.0]
+
+optim:
+  num_points: 50
+  num_iters: 100
+  num_starts: 500
+  resample_interval: 20
+  initialguess_points: 2
+  obstacle_cost_eps: 0.05
+  convergence_tol: 0.000001
+  patience_limit: 5
+  collcheck_upsampling_factor: 10
+  max_iter_limits: 10
+  step_size: 0.001
+  clip_size: 0.3
+
+benchmark:
+  n_worlds: 100
+  n_configs_per_world: 10
+  

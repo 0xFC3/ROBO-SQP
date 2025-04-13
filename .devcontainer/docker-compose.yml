@@ -1,0 +1,12 @@
+services:
+  chompax-cpu:
+    ports:
+      - "8080:8080"
+      - "8888:8888"
+    command: sleep infinity
+  chompax-gpu:
+      ports:
+        - "8080:8080"
+        - "8888:8888"
+      command: sleep infinity
+ 

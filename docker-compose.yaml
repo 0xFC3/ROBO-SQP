@@ -1,0 +1,40 @@
+services:
+  chompax-cpu:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      ssh:
+        - default
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - .:/workspace:cached
+    environment:
+      - DISPLAY=unix$DISPLAY
+      - ROBDATA_PATH=/workspace/data
+    ports:
+      - "5900:5900"
+  chompax-gpu:
+    build:
+      dockerfile: Dockerfile-GPU
+      context: .
+      ssh:
+        - default
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - .:/workspace:cached
+    environment:
+      - DISPLAY=unix$DISPLAY
+      - ROBDATA_PATH=/workspace/data
+    ports:
+      - "5900:5900"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    ipc: host

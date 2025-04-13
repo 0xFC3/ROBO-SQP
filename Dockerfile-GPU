@@ -1,0 +1,39 @@
+FROM nvcr.io/nvidia/jax:24.10-py3
+
+# Install some basic utilities for graphics
+RUN : \
+&& apt-get update \
+&& DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends \
+libglu1-mesa-dev \
+libx11-xcb-dev \
+'^libxcb*'
+ENV QT_QPA_PLATFORM=xcb
+
+# download public key for github.com
+RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+#for the jax container we cannot use conda
+RUN --mount=type=ssh pip install git+ssh://git@github.com/tenhjo/rokin.git@stable1.10 nvidia-cudnn-cu12==9.5.0.50
+RUN pip install yaspin pandas matplotlib optax jupyter jupyterlab ipykernel plotly optax taichi pyvista
+RUN pip install pytest
+
+#we need eigen headerfiles for the c++ code of rokin
+WORKDIR /eigensetup
+RUN git clone https://gitlab.com/libeigen/eigen.git
+WORKDIR /eigensetup/eigen
+#set EIGEN_INCLUDE_DIR to the directory where the eigen header files are located
+ENV EIGEN_INCLUDE_DIR=/eigensetup/eigen
+
+#enable colors in bash
+ENV TERM=xterm-256color
+RUN echo "PS1='\e[92m\u\e[0m@\e[94m\h\e[0m:\e[35m\w\e[0m# '" >> /root/.bashrc
+#enable directory colors
+ENV LS_OPTIONS='--color=auto'
+RUN echo "eval \"\$(dircolors)\"" >> /root/.bashrc
+RUN echo "alias ls='ls \$LS_OPTIONS'" >> /root/.bashrc
+RUN echo "alias ll='ls \$LS_OPTIONS -l'" >> /root/.bashrc
+RUN echo "alias l='ls \$LS_OPTIONS -lA'" >> /root/.bashrc
+
+# Set the default command to run a bash shell when starting the container
+WORKDIR /workspace
+CMD ["bash"]

@@ -1,0 +1,27 @@
+name : cpx
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.11
+  - pytorch
+  - pyvista
+  - jupyter
+  - jupyterlab
+  - ipykernel
+  - jaxlib=*=*cuda*
+  - jax
+  - optax
+  - plotly
+  - scipy
+  - numpy
+  - yaspin
+  - matplotlib
+  - pandas
+  - eigen
+  - gdown
+  - pytest
+  - pip:
+    - git+ssh://git@github.com/tenhjo/rokin.git@stable1.10
+    - meshcat
+    - taichi

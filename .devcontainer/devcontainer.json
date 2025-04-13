@@ -1,0 +1,27 @@
+{
+	"name": "Chompax",
+	"dockerComposeFile": [
+		"../docker-compose.yaml",
+		"docker-compose.yml"
+	],
+
+	"service": "chompax-gpu",
+	"runServices": ["chompax-gpu"],
+
+	"workspaceFolder": "/workspace",
+
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-python.autopep8",
+				"ms-toolsai.jupyter"
+			],
+			"settings": {
+				"jupyter.notebookFileRoot": "${workspaceFolder}",
+			}
+
+		}
+	},
+}
