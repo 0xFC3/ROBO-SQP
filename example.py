@@ -97,13 +97,14 @@ def main():
     )
     
     # Display the initial trajectory
-    print("Displaying initial trajectory...")
+    print("Plotting initial trajectory...")
     viz_initial = RobotVis2DPlotly(original_traj, world, world_info, robot_info, optim_info)
-    viz_initial.plot(100, show_plot=True)
-    
+    viz_initial.plot(100, show_plot=False)
+    viz_initial.save_fig('initial_trajectory.html')
+    print("Plot saved to initial_trajectory.html")
 
     # Create SQP solver
-    solver = SQP(
+    solver = SQP(   
         method="line_search",
         max_iter=30,
         optim_info=optim_info,
@@ -135,7 +136,9 @@ def main():
     # Display the optimized trajectory
     print(f"Displaying optimized trajectory ...")
     viz_optimized = RobotVis2DPlotly(optimized_traj, world, world_info, robot_info, optim_info)
-    viz_optimized.plot(100, show_plot=True)
+    viz_optimized.plot(100, show_plot=False)
+    viz_optimized.save_fig('optimized_trajectory.html')
+    print("Plot saved to optimized_trajectory.html")
         
 
 if __name__ == "__main__":
